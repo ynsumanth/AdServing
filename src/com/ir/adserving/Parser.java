@@ -45,13 +45,20 @@ public class Parser {
             Element doc = document.createElement("doc");
             root.appendChild(doc);
             
-
 			String pattern = Pattern.quote(System.getProperty("file.separator"));
 
 			String[] myFields = filename.split(pattern);
 			//set FileId in Document obj
 			String myFileId = myFields[myFields.length-1];
 			xmlFilePath = xmlFilePath+myFileId+".xml";
+			
+			Element fileIdElement = document.createElement("field");            
+			Attr fileIdAttr = document.createAttribute("name");
+			fileIdAttr.setValue("id");
+            fileIdElement.appendChild(document.createTextNode(myFileId));
+            fileIdElement.setAttributeNode(fileIdAttr);
+            doc.appendChild(fileIdElement);
+
 //			myDocument.setField(FieldNames.FILEID, myFileId.trim());
 			//set Category in Document obj
 //			String myCategory = myFields[myFields.length-2];
