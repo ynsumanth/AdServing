@@ -16,9 +16,23 @@
 		alert("inside js");
 		document.getElementById("resultDiv").enable=true;
 	}
+	function popup(source, resultfile) {
+		alert('inside popup');
+		var windowTitle = source.innerHTML.value;
+		var newWindow = window.open('','_newtab');
+		alert(windowTitle);
+		newWindow.title = windowTitle;
+		var output = '<h1>'+resultfile.title+'</h1';
+		var popupbody = '<p>'+resultfile.content+'</p>';
+		newWindow.document.body.innerHTML += output+popupbody;
+		return true;
+	}
+	function popup1() {
+		alert('inside popup 1');
+	}
 </script>
 </head>
-<body onload="reset();">
+<body onload="reset();" style="background-color: silver;">
 <f:view>
 	<table id="finderImg" align="center">
 		<tr>
@@ -31,42 +45,57 @@
 		<table align="center" width="100%">
 		<tr valign="middle">
 			<td align="center" valign="middle" width="80%">
-				<input id="searchBox" class="style1" name="box" type="text" value="" dir="ltr" style="border:block ; padding: 0px; margin: 0px; height: auto; 
-				width: 50%; position: relative; z-index: 6; left: 0px; outline: none;">
+				<h:inputText id="searchBox" value="#{homebean.userQuery}" dir="ltr" style="border:block ; padding: 0px; margin: 0px; height: 20px; 
+				width: 372px; position: relative; z-index: 20; left: 0px; outline: none;" autocomplete="off"></h:inputText>
 				<h:commandButton value="Submit"	actionListener="#{homebean.listen}"></h:commandButton>
 			</td>
 		</tr>
 	</table>
 	</h:form>
+	<br><br>
 	<div id="resultDiv">
 	<h:form>
 		<c:set var="isShowResultsEnabled" scope="page" value="#{homebean.pop}"></c:set>
 		<c:if test="${isShowResultsEnabled}">
-			<table width="100%" style="border-left: thick 10%; border-left-color: white;border-left-style: hidden;">
+			<table width="100%" style="border-left: thick 10%; border-left-color: white;border-left-style: hidden; height: 295px">
 			<tr>
 				<td align="center">
-					<table width="70%">
-						<c:forEach var="result" items="#{homebean.list}">
+					<table width="70%" style="table-layout: fixed; height: 141px">
+						<c:forEach var="hmap" items="#{homebean.newsResult}">
 							<tr>
-								<td align="center">
-									<c:out value="${result }"></c:out>
+								<td align="justify" width="100%" style="width: 682px; " dir="ltr">
+									<h:commandLink onmousedown="popup(this,hmap.key)"><c:out value="${hmap.key.title}"></c:out></h:commandLink>
+									<br>
+									<div id="snippet">
+										<c:forEach var="value" items="${hmap.value}">
+											<c:out value="${value}">..</c:out>
+										</c:forEach>
+									</div>
+									<br>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
 				</td>
-				<td align="right">
-					<table width="30%">
-						
-						<c:forEach var="adResult" items="#{homebean.list }">
+				<td align="right" style="vertical-align: top;">
+					<table style="width: 413px; height: 102px; table-layout: fixed; vertical-align: top;">
+						<c:forEach var="hmap" items="#{homebean.newsResult}">
 							<tr>
-								<td dir="ltr"><c:out value="${adResult }"></c:out></td>
+								<td dir="ltr" style="height: 49px; width: 376px; "><c:out value="${hmap.key.title}"></c:out></td>
 							</tr>	
 						</c:forEach>
 					</table>
 				</td>
 			</tr>
+			<tr>
+				<td align="center">
+					<h:commandLink>Previous</h:commandLink>
+					<span style="padding: 68px">&nbsp;</span>
+					<h:commandLink>Next</h:commandLink>
+				</td>
+			</tr>
 		</table>
+		
 		</c:if>
 	</h:form>
 	</div>

@@ -1,33 +1,47 @@
 package com.ir.bean;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
+import com.ir.adserving.Document;
+import com.ir.adserving.Query;
+@ManagedBean
 public class HomeBean {
-	private List<String> list;
+	private Map<Document, List<String>> newsResult;
+	private String userQuery;
 	private boolean pop;
 	public HomeBean() {
 		// TODO Auto-generated constructor stub
-		list = new ArrayList<String>();
+		newsResult = new HashMap<Document, List<String>>();
+	}
+	public String getUserQuery() {
+		return userQuery;
+	}
+	public void setUserQuery(String userQuery) {
+		this.userQuery = userQuery;
 	}
 	public boolean getPop() {
 		return pop;
 	}
-	public List<String> getList() {
-		return list;
+	public void setNewsResult(Map<Document, List<String>> newsResult) {
+		this.newsResult = newsResult;
 	}
-	public void setList(List<String> list) {
-		this.list = list;
+	public Map<Document, List<String>> getNewsResult() {
+		return newsResult;
 	}
 	public String action() {
 		System.out.println("inside action method");
 		return "success";
 	}
 	public void listen(ActionEvent event) {
-		list.add("one");
-		list.add("two");
-		pop = true;
+		Query query = new Query();
+		System.out.println("inside listen method");
+		newsResult = query.query(userQuery);
+		if(newsResult!=null && newsResult.size()!=0) 
+			pop = true;
 	}
 }
