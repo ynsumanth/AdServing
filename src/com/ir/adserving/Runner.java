@@ -9,12 +9,12 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.util.NamedList;
 
 public class Runner {
-	public static String xmlFilePath = System.getProperty ("user.home") + "/Documents/MSCS/IR_project3/solr-4.10.2/xmlcorpus/";
+	public static String xmlFilePath = System.getProperty ("user.home") + "\\Documents\\Xmlcorpus\\";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		createXMLFiles(args[0]);
-		updateXMLFiles(xmlFilePath);
+		createXMLFiles(args[0]);
+//		updateXMLFiles(xmlFilePath);
 	}
 	
 	public static void createXMLFiles(String corpusDir){

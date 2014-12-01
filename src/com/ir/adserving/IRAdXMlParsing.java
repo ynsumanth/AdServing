@@ -21,7 +21,7 @@ public class IRAdXMlParsing {
 			Matcher mat = pat.matcher(res);
 			if (mat.find()) {
 				count++;
-				String adFolder = "C:/Users/chakri/Desktop/IR/Project3/AdvertisementDataSet/AdXmls/";
+				String adFolder = "C:/Users/Administrator/Documents/AdXmls";
 				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(adFolder + count + ".xml")));
 				bw.write("<add>\n<doc>\n");
 				bw.write("<field name=\"" + AdFilelds.keyword + "\">" + mat.group(2).trim() + "</field>\n");
